@@ -36,6 +36,7 @@ main{max-width:1050px;margin:0 auto;padding:20px}
 .two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .row small{color:var(--mute);display:block}
+.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .mini{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--ink)}
 .mini.go{background:var(--ok);color:#fff;border-color:var(--ok)}
 .chart{display:flex;align-items:flex-end;gap:10px;height:160px;padding-top:10px}
@@ -91,7 +92,8 @@ footer{text-align:center;color:var(--mute);padding:30px;font-size:.9rem}
     <div class="card">
       <h3>Add a booking</h3>
       <form class="book" onsubmit="return addGig(event)">
-        <input id="gn" placeholder="Client or event name" required>
+        <input id="gn" placeholder="Client name" required>
+        <input id="gt" type="tel" inputmode="tel" placeholder="Client phone, e.g. 0712345678" required>
         <input id="gd" type="date" required>
         <input id="gp" type="number" min="0" placeholder="Price (KES)" required>
         <button class="btn" type="submit">Save booking</button>
@@ -116,6 +118,14 @@ function kes(n){ return "KES " + n.toLocaleString("en-KE"); }
 function fmt(d){ return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }
 function $(id){ return document.getElementById(id); }
 
+function cleanPhone(p){
+  var d = String(p || "").replace(/\D/g, "");
+  if (d.indexOf("254") === 0) return d;
+  if (d.charAt(0) === "0") return "254" + d.slice(1);
+  if (d.length === 9) return "254" + d;
+  return d;
+}
+
 function sendBooking(e){
   e.preventDefault();
   var msg = "Hello Deejaylincy, I would like to book you.\n" +
@@ -130,7 +140,7 @@ function sendBooking(e){
 
 function addGig(e){
   e.preventDefault();
-  data.push({id:Date.now(), n:$("gn").value, d:$("gd").value, p:Number($("gp").value), s:"pending"});
+  data.push({id:Date.now(), n:$("gn").value, t:cleanPhone($("gt").value), d:$("gd").value, p:Number($("gp").value), s:"pending"});
   save(); e.target.reset(); render();
   return false;
 }
@@ -142,6 +152,13 @@ function removeGig(id){
   data = data.filter(function(g){ return g.id !== id; });
   save(); render();
 }
+function msgClient(id){
+  var g = data.filter(function(x){ return x.id === id; })[0];
+  if (!g || !g.t) return;
+  var msg = "Hello " + g.n + ", your booking with Deejaylincy on " + fmt(g.d) +
+    " is confirmed. Price: " + kes(g.p) + ". Thank you, see you there!";
+  window.open("https://wa.me/" + g.t + "?text=" + encodeURIComponent(msg), "_blank");
+}
 
 function render(){
   var pend = data.filter(function(g){ return g.s === "pending"; });
@@ -152,14 +169,15 @@ function render(){
   $("sEarn").textContent = kes(conf.reduce(function(a,g){ return a + g.p; }, 0));
 
   $("reqs").innerHTML = pend.length ? pend.map(function(g){
-    return '<div class="row"><div>' + g.n + '<small>' + fmt(g.d) + ' · ' + kes(g.p) + '</small></div><div>' +
-      '<button class="mini go" onclick="setStatus(' + g.id + ',\'confirmed\')">Confirm</button> ' +
+    return '<div class="row"><div>' + g.n + '<small>' + fmt(g.d) + ' · ' + kes(g.p) + '</small></div><div class="acts">' +
+      '<button class="mini go" onclick="setStatus(' + g.id + ',\'confirmed\')">Confirm</button>' +
       '<button class="mini" onclick="removeGig(' + g.id + ')">Remove</button></div></div>';
   }).join("") : '<p class="empty">No pending requests. When a client messages you on WhatsApp, add them here.</p>';
 
   $("gigs").innerHTML = conf.length ? conf.map(function(g){
-    return '<div class="row"><div>' + g.n + '<small>' + fmt(g.d) + ' · ' + kes(g.p) + '</small></div>' +
-      '<button class="mini" onclick="removeGig(' + g.id + ')">Remove</button></div>';
+    return '<div class="row"><div>' + g.n + '<small>' + fmt(g.d) + ' · ' + kes(g.p) + '</small></div><div class="acts">' +
+      (g.t ? '<button class="mini go" onclick="msgClient(' + g.id + ')">Message client</button>' : '') +
+      '<button class="mini" onclick="removeGig(' + g.id + ')">Remove</button></div></div>';
   }).join("") : '<p class="empty">No confirmed gigs yet.</p>';
 
   var by = {};
