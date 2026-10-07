@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deejaylincy</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF6EC;--card:#fff;--ink:#1E1033;--mute:#6B5A80;--line:#E8DCCB;--accent:#FF5A2C;--accent2:#7B5CFF;--ok:#13a48f}
+@media (prefers-color-scheme:dark){:root{--bg:#1E1033;--card:#2B1A47;--ink:#FFF6EC;--mute:#B9A8D6;--line:#3F2B63;--accent:#FF7A4D;--accent2:#A592FF}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.5}
+h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;margin:0;line-height:1.05}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.4rem}
+.logo span{color:var(--accent)}
+nav{display:flex;gap:6px}
+nav button{background:none;border:0;color:var(--mute);padding:8px 14px;border-radius:999px;font-weight:500}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+main{max-width:1050px;margin:0 auto;padding:20px}
+.hero{padding:40px 0 28px}
+.hero h1{font-size:clamp(3rem,13vw,7.5rem);font-weight:800;letter-spacing:-.03em}
+.hero p{max-width:46ch;color:var(--mute);font-size:1.1rem}
+.eq{display:flex;align-items:flex-end;gap:5px;height:90px;margin:26px 0}
+.eq i{flex:1;max-width:18px;background:var(--accent);border-radius:4px 4px 0 0;animation:eq 1.1s ease-in-out infinite alternate}
+.eq i:nth-child(even){background:var(--accent2)}
+@keyframes eq{from{height:12%}to{height:100%}}
+@media (prefers-reduced-motion:reduce){.eq i{animation:none;height:55%}}
+.btn{background:var(--accent);color:#1E1033;border:0;padding:12px 22px;border-radius:10px;font-weight:700}
+.btn.ghost{background:none;border:2px solid var(--ink);color:var(--ink)}
+.grid{display:grid;gap:14px}
+.three{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card h3{font-size:1.15rem;margin-bottom:8px}
+.stat b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:2.2rem}
+.stat span{color:var(--mute);font-size:.9rem}
+.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.row small{color:var(--mute);display:block}
+.tag{font-size:.8rem;padding:3px 10px;border-radius:999px;background:var(--line);white-space:nowrap}
+.tag.ok{background:var(--ok);color:#fff}
+.mini{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--ink)}
+.mini.go{background:var(--ok);color:#fff;border-color:var(--ok)}
+.chart{display:flex;align-items:flex-end;gap:10px;height:160px;padding-top:10px}
+.chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:.8rem;color:var(--mute)}
+.chart i{display:block;width:100%;background:var(--accent2);border-radius:6px 6px 0 0;margin-bottom:4px}
+form.book{display:grid;gap:10px;margin-top:10px}
+input,select{padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+h2{font-size:2rem;margin:6px 0 16px}
+[hidden]{display:none!important}
+footer{text-align:center;color:var(--mute);padding:30px;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Deejay<span>lincy</span></div>
+  <nav role="tablist" aria-label="Pages">
+    <button role="tab" aria-selected="true" data-view="home">Home</button>
+    <button role="tab" aria-selected="false" data-view="dash">Dashboard</button>
+  </nav>
+</header>
+
+<main>
+<section id="home">
+  <div class="hero">
+    <h1>Deejaylincy</h1>
+    <p>Live sets for weddings, clubs, campus events and corporate nights. Pick a date and get the room moving.</p>
+    <div class="eq" aria-hidden="true"></div>
+    <button class="btn" onclick="show('dash')">Open dashboard</button>
+    <a href="#book"><button class="btn ghost" type="button">Book a date</button></a>
+  </div>
+  <div class="grid three">
+    <div class="card"><h3>Weddings</h3><p>Ceremony music, dinner playlists and a full dance floor set.</p></div>
+    <div class="card"><h3>Club nights</h3><p>Afrobeats, Gengetone, Amapiano, house and hip hop.</p></div>
+    <div class="card"><h3>Corporate and school events</h3><p>Sound, lights and an MC for launches, graduations and parties.</p></div>
+  </div>
+  <div class="card" id="book" style="margin-top:14px">
+    <h3>Book Deejaylincy</h3>
+    <form class="book" onsubmit="return addBooking(event)">
+      <input id="bn" placeholder="Your name" required>
+      <select id="bt"><option>Wedding</option><option>Club night</option><option>Corporate event</option><option>Birthday</option></select>
+      <input id="bd" type="date" required>
+      <button class="btn" type="submit">Send request</button>
+    </form>
+    <p id="bmsg" style="color:var(--ok);margin:8px 0 0" role="status"></p>
+  </div>
+</section>
+
+<section id="dash" hidden>
+  <h2>Dashboard</h2>
+  <div class="grid three">
+    <div class="card stat"><b id="sGigs">0</b><span>Confirmed gigs this month</span></div>
+    <div class="card stat"><b id="sReq">0</b><span>Pending requests</span></div>
+    <div class="card stat"><b id="sEarn">KES 0</b><span>Earnings this month</span></div>
+  </div>
+  <div class="grid two">
+    <div class="card"><h3>Booking requests</h3><div id="reqs"></div></div>
+    <div class="card"><h3>Upcoming gigs</h3><div id="gigs"></div></div>
+    <div class="card"><h3>Earnings by month (KES thousands)</h3><div class="chart" id="chart"></div></div>
+    <div class="card"><h3>Mixes</h3><div id="mixes"></div></div>
+  </div>
+</section>
+</main>
+<footer>Deejaylincy. Kisii, Kenya.</footer>
+
+<script>
+var gigs=[{n:"Achieng and Brian wedding",d:"Oct 17",p:35000},{n:"Campus freshers night",d:"Oct 24",p:18000},{n:"Kisii Fest after-party",d:"Nov 7",p:25000}];
+var reqs=[{n:"Mercy W.",t:"Birthday",d:"Nov 14",p:12000},{n:"Kisii Tech Hub",t:"Corporate event",d:"Nov 21",p:30000}];
+var mixes=[{n:"Afrobeats Friday Vol. 4",l:"58 min"},{n:"Gengetone Throwback",l:"44 min"},{n:"Amapiano Sunset",l:"62 min"}];
+var months=[["Jun",42],["Jul",55],["Aug",38],["Sep",71],["Oct",78]];
+var playing=-1;
+function kes(n){return "KES "+n.toLocaleString("en-KE")}
+function render(){
+  document.getElementById("sGigs").textContent=gigs.length;
+  document.getElementById("sReq").textContent=reqs.length;
+  document.getElementById("sEarn").textContent=kes(gigs.reduce(function(a,g){return a+g.p},0));
+  document.getElementById("reqs").innerHTML=reqs.length?reqs.map(function(r,i){
+    return '<div class="row"><div>'+r.n+'<small>'+r.t+', '+r.d+' &middot; '+kes(r.p)+'</small></div><div><button class="mini go" onclick="decide('+i+',true)">Accept</button> <button class="mini" onclick="decide('+i+',false)">Decline</button></div></div>'}).join(""):'<p style="color:var(--mute)">No pending requests. New bookings appear here.</p>';
+  document.getElementById("gigs").innerHTML=gigs.map(function(g){
+    return '<div class="row"><div>'+g.n+'<small>'+g.d+' &middot; '+kes(g.p)+'</small></div><span class="tag ok">Confirmed</span></div>'}).join("");
+  document.getElementById("mixes").innerHTML=mixes.map(function(m,i){
+    return '<div class="row"><div>'+m.n+'<small>'+m.l+'</small></div><button class="mini" aria-pressed="'+(playing===i)+'" onclick="toggle('+i+')">'+(playing===i?"Pause":"Play")+'</button></div>'}).join("");
+  var max=Math.max.apply(null,months.map(function(m){return m[1]}));
+  document.getElementById("chart").innerHTML=months.map(function(m){
+    return '<div><i style="height:'+(m[1]/max*100)+'%" title="'+m[1]+'k"></i>'+m[0]+'</div>'}).join("");
+}
+function decide(i,ok){var r=reqs.splice(i,1)[0];if(ok)gigs.push({n:r.n+" ("+r.t+")",d:r.d,p:r.p});render()}
+function toggle(i){playing=playing===i?-1:i;render()}
+function addBooking(e){e.preventDefault();
+  var d=new Date(document.getElementById("bd").value);
+  reqs.push({n:document.getElementById("bn").value,t:document.getElementById("bt").value,d:d.toLocaleDateString("en-GB",{day:"numeric",month:"short"}),p:15000});
+  document.getElementById("bmsg").textContent="Request sent. Check the dashboard to accept it.";
+  e.target.reset();render();return false}
+function show(v){
+  document.getElementById("home").hidden=v!=="home";
+  document.getElementById("dash").hidden=v!=="dash";
+  document.querySelectorAll("nav button").forEach(function(b){b.setAttribute("aria-selected",b.dataset.view===v)});
+  window.scrollTo(0,0)}
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){show(b.dataset.view)}});
+var eq=document.querySelector(".eq");
+for(var i=0;i<28;i++){var s=document.createElement("i");s.style.animationDelay=(-Math.random()*1.1)+"s";s.style.animationDuration=(0.7+Math.random()*0.8)+"s";eq.appendChild(s)}
+render();
+</script>
+</body>
+</html>
