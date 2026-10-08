@@ -6,53 +6,55 @@
 <title>Deejaylincy</title>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#FFF6EC;--card:#fff;--ink:#1E1033;--mute:#6B5A80;--line:#E8DCCB;--accent:#FF5A2C;--accent2:#7B5CFF;--ok:#13a48f}
+:root{--bg:#FFF6EC;--card:#fff;--ink:#1E1033;--mute:#6B5A80;--line:#E8DCCB;--accent:#FF5A2C;--accent2:#7B5CFF;--ok:#13a48f;--bad:#d6334a}
 @media (prefers-color-scheme:dark){:root{--bg:#1E1033;--card:#2B1A47;--ink:#FFF6EC;--mute:#B9A8D6;--line:#3F2B63;--accent:#FF7A4D;--accent2:#A592FF}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.5}
 h1,h2,h3{font-family:'Bricolage Grotesque',system-ui,sans-serif;margin:0;line-height:1.05}
 button{font:inherit;cursor:pointer}
-a{color:inherit}
-:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
 .logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.4rem}
 .logo span{color:var(--accent)}
 main{max-width:1050px;margin:0 auto;padding:20px}
-.hero{padding:40px 0 28px}
+.hero{padding:36px 0 24px}
 .hero h1{font-size:clamp(3rem,13vw,7.5rem);font-weight:800;letter-spacing:-.03em}
 .hero p{max-width:46ch;color:var(--mute);font-size:1.1rem}
-.eq{display:flex;align-items:flex-end;gap:5px;height:90px;margin:26px 0}
+.eq{display:flex;align-items:flex-end;gap:5px;height:90px;margin:24px 0}
 .eq i{flex:1;max-width:18px;background:var(--accent);border-radius:4px 4px 0 0;animation:eq 1.1s ease-in-out infinite alternate}
 .eq i:nth-child(even){background:var(--accent2)}
 @keyframes eq{from{height:12%}to{height:100%}}
 @media (prefers-reduced-motion:reduce){.eq i{animation:none;height:55%}}
-.btn{background:var(--accent);color:#1E1033;border:0;padding:12px 22px;border-radius:10px;font-weight:700}
+.btn{background:var(--accent);color:#1E1033;border:0;padding:12px 22px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-block}
+.btn.ghost{background:none;border:2px solid var(--ink);color:var(--ink)}
 .grid{display:grid;gap:14px}
 .three{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
 .card h3{font-size:1.15rem;margin-bottom:8px}
 .stat b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:2.2rem}
 .stat span{color:var(--mute);font-size:.9rem}
-.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .row small{color:var(--mute);display:block}
-.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.mini{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--ink)}
+.tag{font-size:.8rem;padding:3px 10px;border-radius:999px;background:var(--ok);color:#fff;white-space:nowrap}
+.mini{padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--ink);text-decoration:none;font-size:.9rem}
 .mini.go{background:var(--ok);color:#fff;border-color:var(--ok)}
 .chart{display:flex;align-items:flex-end;gap:10px;height:160px;padding-top:10px}
 .chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:.8rem;color:var(--mute)}
 .chart i{display:block;width:100%;background:var(--accent2);border-radius:6px 6px 0 0;margin-bottom:4px}
-form.book{display:grid;gap:10px;margin-top:10px}
-input,select{padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+form{display:grid;gap:10px;margin-top:10px}
+input,select{padding:11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;width:100%}
+.msg{margin:8px 0 0;font-weight:500}
+.note{background:#fff3cd;color:#5c4400;padding:10px 14px;border-radius:10px;margin-bottom:14px;font-size:.9rem}
 h2{font-size:2rem;margin:6px 0 16px}
-.empty{color:var(--mute)}
 [hidden]{display:none!important}
 footer{text-align:center;color:var(--mute);padding:30px;font-size:.9rem}
+footer a{color:var(--mute)}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">Deejay<span>lincy</span></div>
+  <button class="mini" id="homeBtn" onclick="show('home')" hidden>Back to site</button>
 </header>
 
 <main>
@@ -61,7 +63,7 @@ footer{text-align:center;color:var(--mute);padding:30px;font-size:.9rem}
     <h1>Deejaylincy</h1>
     <p>Live sets for weddings, clubs, campus events and corporate nights. Pick a date and get the room moving.</p>
     <div class="eq" aria-hidden="true"></div>
-    <a href="#book"><button class="btn" type="button">Book a date</button></a>
+    <a class="btn" href="#book">Book a date</a>
   </div>
   <div class="grid three">
     <div class="card"><h3>Weddings</h3><p>Ceremony music, dinner playlists and a full dance floor set.</p></div>
@@ -70,142 +72,137 @@ footer{text-align:center;color:var(--mute);padding:30px;font-size:.9rem}
   </div>
   <div class="card" id="book" style="margin-top:14px">
     <h3>Book Deejaylincy</h3>
-    <p class="empty">Your request opens in WhatsApp. Tap Send there to finish.</p>
-    <form class="book" onsubmit="return sendBooking(event)">
+    <form onsubmit="return addBooking(event)">
       <input id="bn" placeholder="Your name" required>
-      <select id="bt"><option>Wedding</option><option>Club night</option><option>Corporate event</option><option>Birthday</option></select>
+      <input id="bp" type="tel" placeholder="Your phone number" required>
+      <select id="bt"><option>Wedding</option><option>Club night</option><option>Corporate event</option><option>School event</option><option>Birthday</option></select>
       <input id="bd" type="date" required>
-      <input id="bl" placeholder="Venue or town" required>
-      <button class="btn" type="submit">Send on WhatsApp</button>
+      <input id="bv" placeholder="Venue / town" required>
+      <button class="btn" type="submit">Send request</button>
     </form>
+    <p id="bmsg" class="msg" role="status"></p>
+  </div>
+</section>
+
+<section id="login" hidden>
+  <h2>Owner login</h2>
+  <div class="card" style="max-width:420px">
+    <form onsubmit="return doLogin(event)">
+      <input id="le" type="email" placeholder="Email" required>
+      <input id="lp" type="password" placeholder="Password" required>
+      <button class="btn" type="submit">Log in</button>
+    </form>
+    <p id="lmsg" class="msg" style="color:var(--bad)"></p>
   </div>
 </section>
 
 <section id="dash" hidden>
-  <h2>Dashboard</h2>
+  <div style="display:flex;justify-content:space-between;align-items:center"><h2>Dashboard</h2><button class="mini" onclick="logout()">Log out</button></div>
   <div class="grid three">
-    <div class="card stat"><b id="sGigs">0</b><span>Confirmed gigs</span></div>
+    <div class="card stat"><b id="sGigs">0</b><span>Confirmed gigs this month</span></div>
     <div class="card stat"><b id="sReq">0</b><span>Pending requests</span></div>
-    <div class="card stat"><b id="sEarn">KES 0</b><span>Confirmed earnings</span></div>
+    <div class="card stat"><b id="sEarn">KES 0</b><span>Earnings this month</span></div>
   </div>
   <div class="grid two">
-    <div class="card">
-      <h3>Add a booking</h3>
-      <form class="book" onsubmit="return addGig(event)">
-        <input id="gn" placeholder="Client name" required>
-        <input id="gt" type="tel" inputmode="tel" placeholder="Client phone, e.g. 0712345678" required>
-        <input id="gd" type="date" required>
-        <input id="gp" type="number" min="0" placeholder="Price (KES)" required>
-        <button class="btn" type="submit">Save booking</button>
-      </form>
-    </div>
-    <div class="card"><h3>Pending requests</h3><div id="reqs"></div></div>
-    <div class="card"><h3>Confirmed gigs</h3><div id="gigs"></div></div>
+    <div class="card"><h3>Booking requests</h3><div id="reqs"></div></div>
+    <div class="card"><h3>Upcoming gigs</h3><div id="gigs"></div></div>
     <div class="card"><h3>Earnings by month (KES thousands)</h3><div class="chart" id="chart"></div></div>
   </div>
-  <p><a href="#">Back to website</a></p>
 </section>
 </main>
-<footer>Deejaylincy. Kisii, Kenya.</footer>
+<footer>Deejaylincy. Kisii, Kenya. &middot; <a href="#" onclick="openOwner();return false">Owner login</a></footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-var WHATSAPP = "254114913589";
+// 1) PASTE YOUR FIREBASE VALUES HERE (Project settings > Your apps > Web app)
+var cfg={apiKey:"PASTE_API_KEY",authDomain:"PASTE_PROJECT_ID.firebaseapp.com",projectId:"PASTE_PROJECT_ID",appId:"PASTE_APP_ID"};
+// 2) WhatsApp number for bookings (international format, no + or spaces)
+var WA="254114913589";
 
-var data = [];
-try { data = JSON.parse(localStorage.getItem("dj_gigs") || "[]"); } catch (e) { data = []; }
-function save(){ try { localStorage.setItem("dj_gigs", JSON.stringify(data)); } catch (e) {} }
-function kes(n){ return "KES " + n.toLocaleString("en-KE"); }
-function fmt(d){ return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}); }
-function $(id){ return document.getElementById(id); }
+var ready=cfg.apiKey.indexOf("PASTE")<0, db=null, auth=null, taken={}, rows=[], unsub=null, MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function $(i){return document.getElementById(i)}
+function kes(n){return "KES "+Number(n||0).toLocaleString("en-KE")}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function msg(t,bad){var m=$("bmsg");m.textContent=t;m.style.color=bad?"var(--bad)":"var(--ok)"}
+function intl(p){p=String(p).replace(/\D/g,"");return p.charAt(0)==="0"?"254"+p.slice(1):p}
+function niceDate(d){var x=new Date(d+"T00:00:00");return x.getDate()+" "+MON[x.getMonth()]+" "+x.getFullYear()}
 
-function cleanPhone(p){
-  var d = String(p || "").replace(/\D/g, "");
-  if (d.indexOf("254") === 0) return d;
-  if (d.charAt(0) === "0") return "254" + d.slice(1);
-  if (d.length === 9) return "254" + d;
-  return d;
+if(ready){
+  firebase.initializeApp(cfg); db=firebase.firestore(); auth=firebase.auth();
+  db.collection("blocked").onSnapshot(function(s){taken={};s.forEach(function(d){taken[d.id]=1});checkDate()});
+  auth.onAuthStateChanged(function(u){
+    if(unsub){unsub();unsub=null}
+    if(!u){return}
+    unsub=db.collection("bookings").orderBy("date").onSnapshot(function(s){
+      rows=[];s.forEach(function(d){var o=d.data();o.id=d.id;rows.push(o)});show("dash");render();
+    },function(){$("lmsg").textContent="This account is not the owner.";auth.signOut();show("login")});
+  });
+}else{
+  var n=document.createElement("div");n.className="note";n.textContent="Setup mode: Firebase is not connected yet. Bookings will open WhatsApp only.";
+  document.querySelector("main").prepend(n);
 }
 
-function sendBooking(e){
+var bd=$("bd");bd.min=new Date().toISOString().slice(0,10);
+bd.onchange=checkDate;
+function checkDate(){if(bd.value&&taken[bd.value]){msg("Sorry, that date is already booked. Please pick another.",true);bd.value=""}else if($("bmsg").style.color==="var(--bad)"){msg("")}}
+
+function addBooking(e){
   e.preventDefault();
-  var msg = "Hello Deejaylincy, I would like to book you.\n" +
-    "Name: " + $("bn").value + "\n" +
-    "Event: " + $("bt").value + "\n" +
-    "Date: " + fmt($("bd").value) + "\n" +
-    "Venue: " + $("bl").value;
-  window.open("https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(msg), "_blank");
-  e.target.reset();
+  var b={name:$("bn").value.trim(),phone:$("bp").value.trim(),type:$("bt").value,date:$("bd").value,venue:$("bv").value.trim()};
+  if(taken[b.date]){msg("That date is already booked. Please pick another.",true);return false}
+  var url="https://wa.me/"+WA+"?text="+encodeURIComponent("Hello Deejaylincy, I would like to book you.\nName: "+b.name+"\nEvent: "+b.type+"\nDate: "+niceDate(b.date)+"\nVenue: "+b.venue+"\nPhone: "+b.phone);
+  var go=function(){location.href=url};
+  if(!ready){go();return false}
+  var rec={name:b.name,phone:b.phone,type:b.type,date:b.date,venue:b.venue,status:"pending",price:0,created:firebase.firestore.FieldValue.serverTimestamp()};
+  db.collection("bookings").add(rec).then(function(){msg("Request sent! Opening WhatsApp to confirm...");e.target.reset();setTimeout(go,900)}).catch(function(){msg("Could not save online. Opening WhatsApp instead...",true);setTimeout(go,900)});
   return false;
 }
 
-function addGig(e){
-  e.preventDefault();
-  data.push({id:Date.now(), n:$("gn").value, t:cleanPhone($("gt").value), d:$("gd").value, p:Number($("gp").value), s:"pending"});
-  save(); e.target.reset(); render();
-  return false;
+function show(v){
+  ["home","login","dash"].forEach(function(id){$(id).hidden=id!==v});
+  $("homeBtn").hidden=v==="home";window.scrollTo(0,0);
 }
-function setStatus(id, s){
-  data.forEach(function(g){ if (g.id === id) g.s = s; });
-  save(); render();
-}
-function removeGig(id){
-  data = data.filter(function(g){ return g.id !== id; });
-  save(); render();
-}
-function msgClient(id){
-  var g = data.filter(function(x){ return x.id === id; })[0];
-  if (!g || !g.t) return;
-  var msg = "Hello " + g.n + ", your booking with Deejaylincy on " + fmt(g.d) +
-    " is confirmed. Price: " + kes(g.p) + ". Thank you, see you there!";
-  window.open("https://wa.me/" + g.t + "?text=" + encodeURIComponent(msg), "_blank");
-}
+function openOwner(){if(!ready){alert("Connect Firebase first (see setup steps).");return}show(auth.currentUser?"dash":"login")}
+function doLogin(e){e.preventDefault();$("lmsg").textContent="";
+  auth.signInWithEmailAndPassword($("le").value,$("lp").value).catch(function(){$("lmsg").textContent="Wrong email or password."});return false}
+function logout(){auth.signOut();rows=[];show("home")}
 
 function render(){
-  var pend = data.filter(function(g){ return g.s === "pending"; });
-  var conf = data.filter(function(g){ return g.s === "confirmed"; })
-                 .sort(function(a,b){ return a.d < b.d ? -1 : 1; });
-  $("sGigs").textContent = conf.length;
-  $("sReq").textContent = pend.length;
-  $("sEarn").textContent = kes(conf.reduce(function(a,g){ return a + g.p; }, 0));
-
-  $("reqs").innerHTML = pend.length ? pend.map(function(g){
-    return '<div class="row"><div>' + g.n + '<small>' + fmt(g.d) + ' · ' + kes(g.p) + '</small></div><div class="acts">' +
-      '<button class="mini go" onclick="setStatus(' + g.id + ',\'confirmed\')">Confirm</button>' +
-      '<button class="mini" onclick="removeGig(' + g.id + ')">Remove</button></div></div>';
-  }).join("") : '<p class="empty">No pending requests. When a client messages you on WhatsApp, add them here.</p>';
-
-  $("gigs").innerHTML = conf.length ? conf.map(function(g){
-    return '<div class="row"><div>' + g.n + '<small>' + fmt(g.d) + ' · ' + kes(g.p) + '</small></div><div class="acts">' +
-      (g.t ? '<button class="mini go" onclick="msgClient(' + g.id + ')">Message client</button>' : '') +
-      '<button class="mini" onclick="removeGig(' + g.id + ')">Remove</button></div></div>';
-  }).join("") : '<p class="empty">No confirmed gigs yet.</p>';
-
-  var by = {};
-  conf.forEach(function(g){ var k = g.d.slice(0,7); by[k] = (by[k] || 0) + g.p; });
-  var keys = Object.keys(by).sort().slice(-6);
-  var max = Math.max.apply(null, keys.map(function(k){ return by[k]; }).concat([1]));
-  $("chart").innerHTML = keys.length ? keys.map(function(k){
-    var m = new Date(k + "-01").toLocaleDateString("en-GB",{month:"short"});
-    return '<div><i style="height:' + (by[k]/max*100) + '%" title="' + Math.round(by[k]/1000) + 'k"></i>' + m + '</div>';
-  }).join("") : '<p class="empty">Confirm a gig to see earnings.</p>';
+  var now=new Date(),ym=now.toISOString().slice(0,7);
+  var pend=rows.filter(function(r){return r.status==="pending"});
+  var conf=rows.filter(function(r){return r.status==="confirmed"});
+  var thisM=conf.filter(function(r){return r.date.slice(0,7)===ym});
+  $("sGigs").textContent=thisM.length;$("sReq").textContent=pend.length;
+  $("sEarn").textContent=kes(thisM.reduce(function(a,r){return a+(r.price||0)},0));
+  $("reqs").innerHTML=pend.length?pend.map(function(r){
+    return '<div class="row"><div>'+esc(r.name)+'<small>'+esc(r.type)+', '+niceDate(r.date)+' &middot; '+esc(r.venue)+'<br>'+esc(r.phone)+'</small></div><div><button class="mini go" onclick="accept(\''+r.id+'\')">Accept</button> <button class="mini" onclick="removeB(\''+r.id+'\')">Decline</button></div></div>'}).join(""):'<p style="color:var(--mute)">No pending requests. New bookings appear here.</p>';
+  var up=conf.filter(function(r){return r.date>=now.toISOString().slice(0,10)});
+  $("gigs").innerHTML=up.length?up.map(function(r){
+    return '<div class="row"><div>'+esc(r.name)+' ('+esc(r.type)+')<small>'+niceDate(r.date)+' &middot; '+kes(r.price)+'</small></div><div><a class="mini" href="https://wa.me/'+intl(r.phone)+'" target="_blank" rel="noopener">WhatsApp</a> <button class="mini" onclick="removeB(\''+r.id+'\')">Cancel</button></div></div>'}).join(""):'<p style="color:var(--mute)">No upcoming gigs yet.</p>';
+  var ms=[];for(var i=4;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);ms.push({k:d.toISOString().slice(0,7),l:MON[d.getMonth()],v:0})}
+  conf.forEach(function(r){ms.forEach(function(m){if(r.date.slice(0,7)===m.k)m.v+=(r.price||0)/1000})});
+  var max=Math.max.apply(null,ms.map(function(m){return m.v}))||1;
+  $("chart").innerHTML=ms.map(function(m){return '<div><i style="height:'+(m.v/max*100)+'%" title="'+m.v+'k"></i>'+m.l+'</div>'}).join("");
+}
+function find(id){return rows.filter(function(r){return r.id===id})[0]}
+function accept(id){
+  var b=find(id);if(!b)return;
+  if(taken[b.date]){alert("That date is already booked by another gig.");return}
+  var p=prompt("Agreed price in KES for "+b.name+"?","");if(p===null)return;
+  db.collection("bookings").doc(id).update({status:"confirmed",price:parseInt(p,10)||0});
+  db.collection("blocked").doc(b.date).set({by:id});
+}
+function removeB(id){
+  var b=find(id);if(!b||!confirm("Remove this booking?"))return;
+  db.collection("bookings").doc(id).delete();
+  if(b.status==="confirmed")db.collection("blocked").doc(b.date).delete();
 }
 
-function route(){
-  var owner = location.hash === "#owner";
-  $("home").hidden = owner;
-  $("dash").hidden = !owner;
-  if (owner) { render(); window.scrollTo(0,0); }
-}
-window.addEventListener("hashchange", route);
-
-var eq = document.querySelector(".eq");
-for (var i = 0; i < 28; i++){
-  var s = document.createElement("i");
-  s.style.animationDelay = (-Math.random()*1.1) + "s";
-  s.style.animationDuration = (0.7 + Math.random()*0.8) + "s";
-  eq.appendChild(s);
-}
-route();
+var eq=document.querySelector(".eq");
+for(var i=0;i<28;i++){var s=document.createElement("i");s.style.animationDelay=(-Math.random()*1.1)+"s";s.style.animationDuration=(0.7+Math.random()*0.8)+"s";eq.appendChild(s)}
 </script>
 </body>
-</html>
+                                                                                                     </html>
+      
