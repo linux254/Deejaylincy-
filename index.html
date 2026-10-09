@@ -177,7 +177,7 @@ function render(){
   $("sGigs").textContent=thisM.length;$("sReq").textContent=pend.length;
   $("sEarn").textContent=kes(thisM.reduce(function(a,r){return a+(r.price||0)},0));
   $("reqs").innerHTML=pend.length?pend.map(function(r){
-    return '<div class="row"><div>'+esc(r.name)+'<small>'+esc(r.type)+', '+niceDate(r.date)+' &middot; '+esc(r.venue)+'<br>'+esc(r.phone)+'</small></div><div><button class="mini go" onclick="accept(\''+r.id+'\')">Accept</button> <button class="mini" onclick="removeB(\''+r.id+'\')">Decline</button></div></div>'}).join(""):'<p style="color:var(--mute)">No pending requests. New bookings appear here.</p>';
+    return '<div class="row"><div>'+esc(r.name)+'<small>'+esc(r.type)+', '+niceDate(r.date)+' &middot; '+esc(r.venue)+'<br>'+esc(r.phone)+'</small></div><div><button class="mini go" onclick="accept(\''+r.id+'\')">Accept</button> <button class="mini" onclick="decline(\''+r.id+'\')">Decline</button></div></div>'}).join(""):'<p style="color:var(--mute)">No pending requests. New bookings appear here.</p>';
   var up=conf.filter(function(r){return r.date>=now.toISOString().slice(0,10)});
   $("gigs").innerHTML=up.length?up.map(function(r){
     return '<div class="row"><div>'+esc(r.name)+' ('+esc(r.type)+')<small>'+niceDate(r.date)+' &middot; '+kes(r.price)+'</small></div><div><a class="mini" href="https://wa.me/'+intl(r.phone)+'" target="_blank" rel="noopener">WhatsApp</a> <button class="mini" onclick="removeB(\''+r.id+'\')">Cancel</button></div></div>'}).join(""):'<p style="color:var(--mute)">No upcoming gigs yet.</p>';
@@ -187,17 +187,25 @@ function render(){
   $("chart").innerHTML=ms.map(function(m){return '<div><i style="height:'+(m.v/max*100)+'%" title="'+m.v+'k"></i>'+m.l+'</div>'}).join("");
 }
 function find(id){return rows.filter(function(r){return r.id===id})[0]}
+function tell(b,text){window.open("https://wa.me/"+intl(b.phone)+"?text="+encodeURIComponent(text),"_blank")}
 function accept(id){
   var b=find(id);if(!b)return;
   if(taken[b.date]){alert("That date is already booked by another gig.");return}
   var p=prompt("Agreed price in KES for "+b.name+"?","");if(p===null)return;
-  db.collection("bookings").doc(id).update({status:"confirmed",price:parseInt(p,10)||0});
+  var price=parseInt(p,10)||0;
+  db.collection("bookings").doc(id).update({status:"confirmed",price:price});
   db.collection("blocked").doc(b.date).set({by:id});
+  tell(b,"Hello "+b.name+", this is Deejaylincy. Good news! Your "+b.type+" booking on "+niceDate(b.date)+" at "+b.venue+" is CONFIRMED."+(price?" Agreed price: KES "+price.toLocaleString("en-KE")+".":"")+" Thank you for choosing Deejaylincy!");
+}
+function decline(id){
+  var b=find(id);if(!b||!confirm("Decline this request and tell the client?"))return;
+  db.collection("bookings").doc(id).delete();
+  tell(b,"Hello "+b.name+", this is Deejaylincy. Thank you for your request for "+niceDate(b.date)+". Unfortunately I am not available on that date. Please send another date and I will gladly check.");
 }
 function removeB(id){
   var b=find(id);if(!b||!confirm("Remove this booking?"))return;
   db.collection("bookings").doc(id).delete();
-  if(b.status==="confirmed")db.collection("blocked").doc(b.date).delete();
+  if(b.status==="confirmed"){db.collection("blocked").doc(b.date).delete();tell(b,"Hello "+b.name+", this is Deejaylincy. I am sorry, I have to cancel your booking on "+niceDate(b.date)+". Please contact me to arrange another date.")}
 }
 
 var eq=document.querySelector(".eq");
